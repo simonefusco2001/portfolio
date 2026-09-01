@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <!--
   Landing page del portfolio di Simone Fusco.
-  Struttura/UX invariata (logo → badge → heading → sottotitolo → CTA download → footer link).
+  Documento a scorrimento verticale con sezioni: Home (hero) → About → Progetti → Strumenti → Contatti.
   Palette "Il forno": calda, artigianale, poco corporate (fondo #F1E9D8, testo #3A2A1C,
-  accento #C98A2E). Motivi visivi ispirati a Framer/Portavia
-  (https://www.framer.com/marketplace/templates/portavia/): titolo grande in serif bold,
-  badge/CTA "sollevati" con ombra morbida, texture a grana leggera al posto della
-  dot-grid per una resa più tattile.
+  accento #C98A2E). Motivi visivi ispirati a Framer/Portavia: titoli grandi, elementi
+  "sollevati" con ombra morbida, texture a grana leggera fissa sul viewport.
 -->
 <html lang="it">
 <head>
@@ -15,7 +13,7 @@
   <title>Simone Fusco — Portfolio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700;900&family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
   <style>
     :root {
       --background: #F1E9D8;
@@ -45,33 +43,56 @@
       }
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { height: 100%; }
+    html { scroll-behavior: smooth; }
     body {
       position: relative;
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 6vw 5vw;
-      overflow: hidden;
       background: var(--background);
       color: var(--foreground);
       font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      text-align: center;
       transition: background 0.2s ease, color 0.2s ease;
     }
-    /* texture a grana leggera — resa "tattile", carta/artigianale */
+    /* texture a grana leggera — fissa sul viewport mentre la pagina scorre */
     body::before {
       content: "";
-      position: absolute;
+      position: fixed;
       inset: 0;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
       opacity: var(--grain-opacity);
       mix-blend-mode: var(--grain-blend);
       pointer-events: none;
+      z-index: 0;
     }
     picture { display: contents; }
+
+    /* ---- Layout condiviso delle sezioni ---- */
+    section { scroll-margin-top: 6.5rem; }
+    .section {
+      position: relative;
+      z-index: 1;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: clamp(5rem, 12vh, 9rem) clamp(1.25rem, 5vw, 2.5rem);
+    }
+    .section > h2 {
+      font-family: "Fraunces", "Iowan Old Style", Georgia, serif;
+      font-size: clamp(2rem, 5vw, 3.25rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-bottom: 1.5rem;
+    }
+    .section p { color: var(--muted-foreground); max-width: 34rem; line-height: 1.6; }
+
+    /* ---- #home (hero) — resta centrato ---- */
+    #home {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
     .logo {
       position: relative;
       display: block;
@@ -111,7 +132,7 @@
     }
     p.sub {
       position: relative;
-      margin-top: 1rem;
+      margin: 1rem auto 0;
       max-width: 32rem;
       color: var(--muted-foreground);
       font-size: clamp(0.95rem, 2vw, 1.125rem);
@@ -140,11 +161,100 @@
       box-shadow: 0 4px 10px rgba(58, 42, 28, 0.14), 0 16px 36px -8px color-mix(in srgb, var(--accent) 70%, transparent);
     }
     .cta:active { transform: translateY(0); }
+
+    /* ---- #about ---- */
+    .exp-list { list-style: none; margin: 2.25rem 0; }
+    .exp-list li {
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .exp-list li:first-child { border-top: 1px solid var(--border); }
+    .exp-role { font-weight: 600; color: var(--foreground); }
+    .exp-meta { display: block; margin-top: 0.2rem; color: var(--muted-foreground); font-size: 0.9rem; }
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: clamp(1.5rem, 6vw, 3.5rem);
+      margin-top: 1rem;
+    }
+    .stat-num {
+      font-family: "Fraunces", "Iowan Old Style", Georgia, serif;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      font-size: clamp(2.5rem, 7vw, 4rem);
+      color: var(--accent);
+    }
+    .stat-label { margin-top: 0.35rem; color: var(--muted-foreground); font-size: 0.9rem; }
+
+    /* ---- #progetti ---- */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin-top: 0.5rem;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      box-shadow: 0 1px 2px rgba(58, 42, 28, 0.06), 0 14px 34px -14px rgba(58, 42, 28, 0.22);
+    }
+    .card h3 {
+      font-family: "Fraunces", "Iowan Old Style", Georgia, serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .card .period { display: block; margin: 0.35rem 0 0.85rem; color: var(--muted-foreground); font-size: 0.9rem; }
+    .card p { max-width: none; }
+
+    /* ---- #strumenti ---- */
+    .skill-group { margin-top: 2rem; }
+    .skill-group h3 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--foreground);
+      margin-bottom: 0.9rem;
+    }
+    .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.35rem 0.8rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--surface);
+      color: var(--muted-foreground);
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    /* ---- #contatti ---- */
+    .contact-links { display: flex; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 0.5rem; }
+    .contact-links a {
+      color: var(--muted-foreground);
+      text-decoration: none;
+      padding-bottom: 2px;
+      border-bottom: 1px solid transparent;
+      transition: color 0.15s ease, border-color 0.15s ease;
+    }
+    .contact-links a:hover { color: var(--accent-hover); border-color: var(--accent); }
+    #contatti .cta { margin-top: 2rem; }
+
+    /* ---- footer ---- */
     footer {
       position: relative;
-      margin-top: 3.5rem;
+      z-index: 1;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 2rem clamp(1.25rem, 5vw, 2.5rem) 3rem;
       display: flex;
+      flex-wrap: wrap;
       gap: 1.5rem;
+      border-top: 1px solid var(--border);
+      color: var(--muted-foreground);
       font-size: 0.875rem;
     }
     footer a {
@@ -158,18 +268,127 @@
   </style>
 </head>
 <body>
-  <picture>
-    <source srcset="logo-dark.png" media="(prefers-color-scheme: dark)">
-    <img class="logo" src="logo.png" alt="Simone Fusco" width="512" height="497">
-  </picture>
-  <span class="badge"><span class="dot"></span>Aperto a nuove opportunità</span>
-  <h1>Portfolio</h1>
-  <p class="sub">Simone Fusco — Marketing, AI &amp; Data Analytics</p>
-  <a class="cta" href="Simone_Fusco_CV.pdf" download="Simone_Fusco_CV.pdf">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
-    Scarica CV
-  </a>
+  <section id="home" class="section">
+    <picture>
+      <source srcset="logo-dark.png" media="(prefers-color-scheme: dark)">
+      <img class="logo" src="logo.png" alt="Simone Fusco" width="512" height="497">
+    </picture>
+    <span class="badge"><span class="dot"></span>Aperto a nuove opportunità</span>
+    <h1>Portfolio</h1>
+    <p class="sub">Simone Fusco — Marketing, AI &amp; Data Analytics</p>
+    <a class="cta" href="Simone_Fusco_CV.pdf" download="Simone_Fusco_CV.pdf">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+      Scarica CV
+    </a>
+  </section>
+
+  <section id="about" class="section">
+    <h2>About</h2>
+    <p>Laureando in Marketing &amp; Digital Communication (LUMSA), con percorso in AI e Analisi
+      dei Dati per il Marketing e la Comunicazione. Esperienza in data analytics per il
+      marketing, customer experience e digital marketing. Founder di Lievitista (web app
+      AI-first) e host del podcast &ldquo;Fuori Tendenza&rdquo;. Approccio data-driven, learning by doing.</p>
+    <ul class="exp-list">
+      <li>
+        <span class="exp-role">Customer Experience (CX) Analyst — ConTe.it (Admiral Group)</span>
+        <span class="exp-meta">Roma · 03/2026–06/2026</span>
+      </li>
+      <li>
+        <span class="exp-role">Digital Marketing Specialist — Affiliazen</span>
+        <span class="exp-meta">Roma · 09/2024–11/2024</span>
+      </li>
+      <li>
+        <span class="exp-role">Digital &amp; Social Media Strategist — Gusto e Sapore</span>
+        <span class="exp-meta">Anzio · 10/2023–01/2024</span>
+      </li>
+    </ul>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-num">60+</div>
+        <div class="stat-label">early adopter</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">120+</div>
+        <div class="stat-label">lead</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">100+</div>
+        <div class="stat-label">ascolti</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="progetti" class="section">
+    <h2>Progetti</h2>
+    <div class="cards">
+      <article class="card">
+        <h3>Lievitista</h3>
+        <span class="period">Founder · 10/2025–oggi</span>
+        <p>MVP di una web app AI-first per gestione e creazione del lievito madre. Validato
+          con 60+ early adopter, 120+ lead. Posizionamento, esperimenti data-driven,
+          strategia di prodotto.</p>
+      </article>
+      <article class="card">
+        <h3>Fuori Tendenza</h3>
+        <span class="period">Host &amp; Creator · 07/2025–oggi</span>
+        <p>Podcast su storie personali e influenza dei social media su identità, relazioni e
+          scelte. 100+ ascolti su Spotify, migliaia di visualizzazioni social.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="strumenti" class="section">
+    <h2>Strumenti</h2>
+    <div class="skill-group">
+      <h3>AI &amp; Data Analytics</h3>
+      <div class="chips">
+        <span class="chip">AI-Driven Workflows</span>
+        <span class="chip">AI Agent Workflows</span>
+        <span class="chip">Data Analytics per il Marketing</span>
+        <span class="chip">Python (AI &amp; Modelli Predittivi)</span>
+        <span class="chip">Data Science</span>
+        <span class="chip">Sentiment Analysis &amp; Big Data</span>
+        <span class="chip">Prompt Design</span>
+        <span class="chip">KPI Analysis (CSAT, NPS)</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <h3>Marketing &amp; Comunicazione Digitale</h3>
+      <div class="chips">
+        <span class="chip">Digital &amp; Social Media Strategy</span>
+        <span class="chip">Web Marketing</span>
+        <span class="chip">CRM &amp; Funnel Management</span>
+        <span class="chip">Market Research</span>
+        <span class="chip">Retail Marketing &amp; Revenue Management</span>
+        <span class="chip">Content Strategy &amp; Storytelling</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <h3>Strumenti &amp; Soft Skill</h3>
+      <div class="chips">
+        <span class="chip">Lark</span>
+        <span class="chip">Copywriting</span>
+        <span class="chip">Public Speaking (podcast hosting)</span>
+        <span class="chip">Design Thinking &amp; Creative Problem Solving</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="contatti" class="section">
+    <h2>Contatti</h2>
+    <p>Scrivimi o scarica il CV per i dettagli completi su esperienze e progetti.</p>
+    <div class="contact-links">
+      <a href="mailto:simone.fusco2001@gmail.com">simone.fusco2001@gmail.com</a>
+      <a href="https://www.linkedin.com/in/simone-fusco-2633a7331/" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+    <a class="cta" href="Simone_Fusco_CV.pdf" download="Simone_Fusco_CV.pdf">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+      Scarica CV
+    </a>
+  </section>
+
   <footer>
+    <span>© 2026 Simone Fusco</span>
     <a href="mailto:simone.fusco2001@gmail.com">Email</a>
     <a href="https://www.linkedin.com/in/simone-fusco-2633a7331/" target="_blank" rel="noopener">LinkedIn</a>
   </footer>

@@ -407,6 +407,58 @@
     @media (prefers-reduced-motion: reduce) {
       .nav, .nav__cta { transition: none; }
     }
+
+    /* ---- Transizioni allo scroll in stile Portavia -----------------------
+       Lo stato "nascosto" esiste SOLO quando il JS aggiunge .js-reveal a <html>.
+       Senza JS (o con prefers-reduced-motion) la pagina resta piena e statica. */
+    html.js-reveal [data-reveal] {
+      opacity: 0;
+      transform: translateY(28px);
+      transition:
+        opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    html.js-reveal [data-reveal].is-revealed {
+      opacity: 1;
+      transform: none;
+    }
+    /* Titoli: mask reveal — testo avvolto in uno <span> che scorre dal basso */
+    html.js-reveal [data-reveal-mask] {
+      overflow: hidden;
+      padding-bottom: 0.12em;
+      margin-bottom: calc(1.5rem - 0.12em);
+    }
+    html.js-reveal [data-reveal-mask] > span {
+      display: inline-block;
+      transform: translateY(110%);
+      transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    html.js-reveal [data-reveal-mask].is-revealed > span {
+      transform: translateY(0);
+    }
+    /* Hero h1: reveal come blocco unico (clip-path) — .hl preservati */
+    html.js-reveal h1[data-reveal-hero] {
+      opacity: 0;
+      clip-path: inset(-4% -8% 108% -8%);
+      transition:
+        opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+        clip-path 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    html.js-reveal h1[data-reveal-hero].is-revealed {
+      opacity: 1;
+      clip-path: inset(-15% -12% -15% -12%);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html.js-reveal [data-reveal],
+      html.js-reveal [data-reveal-mask],
+      html.js-reveal [data-reveal-mask] > span,
+      html.js-reveal h1[data-reveal-hero] {
+        opacity: 1 !important;
+        transform: none !important;
+        clip-path: none !important;
+        transition: none !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -624,6 +676,130 @@
         sections.forEach(function (s) { io.observe(s); });
       }
       setActive('home');
+    })();
+  </script>
+
+  <script>
+    /* Task 4 — transizioni allo scroll in stile Portavia:
+       reveal fade+rise, stagger sui gruppi, mask sui titoli, parallax sottile sull'hero.
+       Progressive enhancement: lo stato iniziale "nascosto" viene applicato solo se
+       questo script gira; con prefers-reduced-motion non si nasconde nulla. */
+    (function () {
+      var root = document.documentElement;
+      var reduceMotion = window.matchMedia &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var STAGGER = 90; // ms per figlio in un gruppo
+
+      // Da qui in poi il CSS puo' applicare lo stato nascosto ai [data-reveal].
+      root.classList.add('js-reveal');
+
+      function markReveal(el, delayMs) {
+        el.setAttribute('data-reveal', '');
+        if (delayMs) el.style.transitionDelay = delayMs + 'ms';
+      }
+
+      function staggerList(nodeList, baseDelay) {
+        Array.prototype.forEach.call(nodeList, function (el, i) {
+          markReveal(el, (baseDelay || 0) + i * STAGGER);
+        });
+      }
+
+      if (!reduceMotion) {
+        // Titoli di sezione -> mask reveal (testo avvolto in uno <span>)
+        Array.prototype.forEach.call(
+          document.querySelectorAll('.section > h2'),
+          function (h) {
+            var span = document.createElement('span');
+            span.textContent = h.textContent;
+            h.textContent = '';
+            h.appendChild(span);
+            h.setAttribute('data-reveal-mask', '');
+          }
+        );
+
+        // Paragrafi introduttivi delle sezioni
+        staggerList(document.querySelectorAll('#about > p, #contatti > p'), 0);
+
+        // Gruppi con stagger per indice tra i fratelli
+        staggerList(document.querySelectorAll('.exp-list > li'));
+        staggerList(document.querySelectorAll('.stats > .stat'));
+        staggerList(document.querySelectorAll('.cards > .card'));
+        staggerList(document.querySelectorAll('#strumenti .skill-group'));
+        staggerList(document.querySelectorAll('#contatti .contact-links > a'));
+
+        // Chip: stagger per indice dentro ciascun contenitore .chips
+        Array.prototype.forEach.call(
+          document.querySelectorAll('#strumenti .chips'),
+          function (box) { staggerList(box.querySelectorAll('.chip')); }
+        );
+
+        // Pulsante "Scarica CV" nella sezione contatti
+        var contactCta = document.querySelector('#contatti .cta');
+        if (contactCta) markReveal(contactCta, 2 * STAGGER);
+      }
+
+      // Reveal quando l'elemento entra nel viewport — una sola volta.
+      function revealNow(el) {
+        var animNode = el.hasAttribute('data-reveal-mask')
+          ? (el.firstElementChild || el) : el;
+        animNode.style.willChange = 'opacity, transform';
+        el.classList.add('is-revealed');
+        var done = function () {
+          animNode.style.willChange = '';
+          el.removeEventListener('transitionend', done);
+        };
+        el.addEventListener('transitionend', done);
+        setTimeout(done, 1400); // fallback se transitionend non scatta
+      }
+
+      var revealTargets = document.querySelectorAll('[data-reveal], [data-reveal-mask]');
+
+      if (!reduceMotion && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries, obs) {
+          entries.forEach(function (en) {
+            if (!en.isIntersecting) return;
+            revealNow(en.target);
+            obs.unobserve(en.target); // niente replay, nemmeno scrollando su
+          });
+        }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
+        Array.prototype.forEach.call(revealTargets, function (el) { io.observe(el); });
+      } else {
+        // Nessun observer / reduced-motion: tutto visibile subito.
+        Array.prototype.forEach.call(revealTargets, function (el) {
+          el.classList.add('is-revealed');
+        });
+      }
+
+      // Hero h1: mask/clip reveal poco dopo il caricamento (sopra la piega).
+      var heroH1 = document.querySelector('#home h1');
+      if (heroH1 && !reduceMotion) {
+        heroH1.setAttribute('data-reveal-hero', '');
+        void heroH1.offsetWidth; // reflow: applica lo stato iniziale
+        setTimeout(function () {
+          heroH1.style.willChange = 'opacity, clip-path';
+          heroH1.classList.add('is-revealed');
+          setTimeout(function () { heroH1.style.willChange = ''; }, 1100);
+        }, 120);
+
+        // Parallax molto sottile: l'h1 sale fino a ~6% dell'altezza viewport
+        // (tetto 42px) nel primo viewport di scroll. La transform inline non
+        // interferisce con opacity/clip-path del reveal.
+        var ticking = false;
+        var applyParallax = function () {
+          var vh = window.innerHeight || 1;
+          var progress = Math.min(Math.max(window.scrollY / vh, 0), 1);
+          var shift = Math.min(progress * vh * 0.06, 42);
+          heroH1.style.transform = 'translateY(' + (-shift).toFixed(2) + 'px)';
+          ticking = false;
+        };
+        window.addEventListener('scroll', function () {
+          if (!ticking) {
+            ticking = true;
+            window.requestAnimationFrame(applyParallax);
+          }
+        }, { passive: true });
+        applyParallax();
+      }
     })();
   </script>
 </body>

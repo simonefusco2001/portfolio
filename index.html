@@ -71,6 +71,7 @@
       mix-blend-mode: var(--grain-blend);
       pointer-events: none;
     }
+    picture { display: contents; }
     .logo {
       position: relative;
       display: block;
@@ -157,7 +158,10 @@
   </style>
 </head>
 <body>
-  <img class="logo" src="logo.png" alt="Simone Fusco" width="512" height="497">
+  <picture>
+    <source srcset="logo-dark.png" media="(prefers-color-scheme: dark)">
+    <img class="logo" src="logo.png" alt="Simone Fusco" width="512" height="497">
+  </picture>
   <span class="badge"><span class="dot"></span>Aperto a nuove opportunità</span>
   <h1>Portfolio</h1>
   <p class="sub">Simone Fusco — Marketing, AI &amp; Data Analytics</p>

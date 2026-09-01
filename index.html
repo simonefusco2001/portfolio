@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <!--
   Landing page del portfolio di Simone Fusco.
-  Struttura/UX invariata (badge → heading → sottotitolo → CTA download → footer link).
+  Struttura/UX invariata (logo → badge → heading → sottotitolo → CTA download → footer link).
   Palette "Il forno": calda, artigianale, poco corporate (fondo #F1E9D8, testo #3A2A1C,
   accento #C98A2E). Motivi visivi ispirati a Framer/Portavia
   (https://www.framer.com/marketplace/templates/portavia/): titolo grande in serif bold,
-  bagliore soffuso colore accento dietro al contenuto, badge/CTA "sollevati" con ombra
-  morbida, texture a grana leggera al posto della dot-grid per una resa più tattile.
+  badge/CTA "sollevati" con ombra morbida, texture a grana leggera al posto della
+  dot-grid per una resa più tattile.
 -->
 <html lang="it">
 <head>
@@ -71,17 +71,12 @@
       mix-blend-mode: var(--grain-blend);
       pointer-events: none;
     }
-    /* bagliore soffuso color accento dietro al contenuto, come il riquadro luminoso di Portavia */
-    .glow {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: min(60rem, 90vw);
-      height: min(60rem, 90vw);
-      transform: translate(-50%, -50%);
-      background: radial-gradient(circle, color-mix(in srgb, var(--accent) 38%, transparent) 0%, transparent 68%);
-      filter: blur(40px);
-      pointer-events: none;
+    .logo {
+      position: relative;
+      display: block;
+      height: clamp(3rem, 9vw, 4.25rem);
+      width: auto;
+      margin-bottom: 2.25rem;
     }
     .badge {
       position: relative;
@@ -162,7 +157,7 @@
   </style>
 </head>
 <body>
-  <div class="glow"></div>
+  <img class="logo" src="logo.png" alt="Simone Fusco" width="512" height="497">
   <span class="badge"><span class="dot"></span>Aperto a nuove opportunità</span>
   <h1>Portfolio</h1>
   <p class="sub">Simone Fusco — Marketing, AI &amp; Data Analytics</p>

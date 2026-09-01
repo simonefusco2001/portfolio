@@ -21,4 +21,4 @@ sia in PDF originale.
 ## Contatti
 
 - Email: simone.fusco2001@gmail.com
-- LinkedIn: [linkedin.com/in/simone-fusco](https://linkedin.com/in/simone-fusco)
+- LinkedIn: [linkedin.com/in/simone-fusco-2633a7331](https://www.linkedin.com/in/simone-fusco-2633a7331/)

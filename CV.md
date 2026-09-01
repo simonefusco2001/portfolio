@@ -1,6 +1,6 @@
 # Simone Fusco
 
-Anzio – Roma, Italia · simone.fusco2001@gmail.com · 380 248 8751 · [linkedin.com/in/simone-fusco](https://linkedin.com/in/simone-fusco)
+Anzio – Roma, Italia · simone.fusco2001@gmail.com · 380 248 8751 · [linkedin.com/in/simone-fusco-2633a7331](https://www.linkedin.com/in/simone-fusco-2633a7331/)
 
 ## Profilo
 

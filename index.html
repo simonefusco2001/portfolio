@@ -279,9 +279,158 @@
       transition: color 0.15s ease, border-color 0.15s ease;
     }
     footer a:hover { color: var(--accent-hover); border-color: var(--accent); }
+
+    /* ---- Nav flottante a pillola (top-center, fissa sopra il contenuto) ---- */
+    .nav {
+      position: fixed;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: clamp(0.5rem, 1.5vw, 1.25rem);
+      max-width: calc(100vw - 2rem);
+      padding: 0.4rem 0.4rem 0.4rem 0.6rem;
+      background: color-mix(in srgb, var(--surface) 88%, transparent);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      box-shadow: 0 4px 16px rgba(58, 42, 28, 0.10), 0 1px 3px rgba(58, 42, 28, 0.08);
+      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(8px);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+    }
+    @supports not ((backdrop-filter: blur(8px)) or (-webkit-backdrop-filter: blur(8px))) {
+      .nav { background: var(--surface); }
+    }
+    .nav--scrolled {
+      transform: translateX(-50%) scale(0.97);
+      background: var(--surface);
+      box-shadow: 0 8px 26px rgba(58, 42, 28, 0.16), 0 2px 6px rgba(58, 42, 28, 0.10);
+    }
+    .nav__logo-link {
+      display: grid;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      outline-offset: 2px;
+    }
+    .nav__logo {
+      width: 2.25rem;
+      height: 2.25rem;
+      border-radius: 50%;
+      background: var(--background);
+      border: 1px solid var(--border);
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+    }
+    .nav__links {
+      display: flex;
+      align-items: center;
+      gap: 0.1rem;
+    }
+    .nav__link {
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--foreground);
+      text-decoration: none;
+      padding: 0.4rem 0.6rem;
+      border-radius: 999px;
+      white-space: nowrap;
+      transition: color 0.15s ease;
+    }
+    .nav__link:hover { color: var(--accent-hover); }
+    .nav__link.is-active { color: var(--accent); }
+    .nav__cta {
+      flex: 0 0 auto;
+      background: var(--foreground);
+      color: var(--background);
+      border-radius: 999px;
+      padding: 0.55rem 1.1rem;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease;
+    }
+    .nav__cta:hover,
+    .nav__cta:focus-visible {
+      background: var(--accent);
+      color: var(--accent-foreground);
+      transform: translateY(-1px);
+    }
+    .nav__toggle {
+      display: none;
+      flex: 0 0 auto;
+      width: 2.25rem;
+      height: 2.25rem;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      background: var(--background);
+      cursor: pointer;
+      padding: 0;
+      place-items: center;
+    }
+    .nav__toggle span {
+      display: block;
+      width: 16px;
+      height: 2px;
+      margin: 3px auto;
+      background: var(--foreground);
+      border-radius: 2px;
+    }
+    .nav a:focus-visible,
+    .nav button:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+    @media (max-width: 640px) {
+      .nav__toggle { display: grid; }
+      .nav__links {
+        position: absolute;
+        top: calc(100% + 8px);
+        right: 0;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.15rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 1rem;
+        padding: 0.5rem;
+        box-shadow: 0 8px 26px rgba(58, 42, 28, 0.16);
+        display: none;
+      }
+      .nav__links.is-open { display: flex; }
+      .nav__link { padding: 0.55rem 0.9rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .nav, .nav__cta { transition: none; }
+    }
   </style>
 </head>
 <body>
+  <nav class="nav" aria-label="Principale">
+    <a class="nav__logo-link" href="#home" aria-label="Torna all'inizio">
+      <span class="nav__logo">
+        <picture>
+          <source srcset="logo-dark.png" media="(prefers-color-scheme: dark)">
+          <img src="logo.png" alt="Simone Fusco" style="width:78%;height:78%;object-fit:contain">
+        </picture>
+      </span>
+    </a>
+    <div class="nav__links" id="nav-links">
+      <a class="nav__link" href="#home">Home</a>
+      <a class="nav__link" href="#about">About</a>
+      <a class="nav__link" href="#progetti">Progetti</a>
+      <a class="nav__link" href="#strumenti">Strumenti</a>
+    </div>
+    <a class="nav__cta" href="#contatti">Contatti</a>
+    <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
   <section id="home" class="section">
     <picture>
       <source srcset="logo-dark.png" media="(prefers-color-scheme: dark)">
@@ -406,5 +555,76 @@
     <a href="mailto:simone.fusco2001@gmail.com">Email</a>
     <a href="https://www.linkedin.com/in/simone-fusco-2633a7331/" target="_blank" rel="noopener">LinkedIn</a>
   </footer>
+
+  <script>
+    (function () {
+      var nav = document.querySelector('.nav');
+      var toggle = nav.querySelector('.nav__toggle');
+      var panel = nav.querySelector('.nav__links');
+      var links = Array.prototype.slice.call(nav.querySelectorAll('.nav__link'));
+
+      // Stato "scrolled": ombra piu forte + leggera riduzione oltre 40px
+      function onScroll() {
+        nav.classList.toggle('nav--scrolled', window.scrollY > 40);
+      }
+      onScroll();
+      window.addEventListener('scroll', onScroll, { passive: true });
+
+      // Menu mobile (hamburger)
+      function closeMenu() {
+        panel.classList.remove('is-open');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+      toggle.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var open = panel.classList.toggle('is-open');
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+      links.forEach(function (l) {
+        l.addEventListener('click', closeMenu);
+      });
+      document.addEventListener('click', function (e) {
+        if (!nav.contains(e.target)) closeMenu();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeMenu();
+      });
+
+      // Scrollspy: una sola sezione attiva alla volta
+      var ids = ['home', 'about', 'progetti', 'strumenti', 'contatti'];
+      var sections = ids
+        .map(function (id) { return document.getElementById(id); })
+        .filter(Boolean);
+      var linkFor = {};
+      links.forEach(function (l) {
+        linkFor[l.getAttribute('href').slice(1)] = l;
+      });
+
+      function setActive(id) {
+        links.forEach(function (l) { l.classList.remove('is-active'); });
+        // #contatti non ha un link centrale: nessuna voce evidenziata li
+        var target = linkFor[id];
+        if (target) target.classList.add('is-active');
+      }
+
+      if ('IntersectionObserver' in window) {
+        var visible = {};
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) {
+            visible[en.target.id] = en.isIntersecting;
+          });
+          // priorita all'ordine del documento
+          var current = null;
+          for (var i = 0; i < ids.length; i++) {
+            if (visible[ids[i]]) { current = ids[i]; break; }
+          }
+          if (window.scrollY < 40) current = 'home';
+          if (current) setActive(current);
+        }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+        sections.forEach(function (s) { io.observe(s); });
+      }
+      setActive('home');
+    })();
+  </script>
 </body>
 </html>

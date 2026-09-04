@@ -11,13 +11,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Simone Fusco — Marketing, AI &amp; Data Analytics</title>
-  <meta name="description" content="Simone Fusco — marketing, AI e data analytics. Laureando magistrale LUMSA, founder di Lievitista, host di Fuori Tendenza. Trasformo i dati in strategie di marketing che funzionano.">
+  <meta name="description" content="Simone Fusco — marketing, AI e data analytics. Laureando magistrale LUMSA, founder di Lievitista, host di Fuori Tendenza. Uso dati e intelligenza artificiale per orientare le decisioni di marketing.">
   <link rel="canonical" href="https://simonefusco2001.github.io/portfolio/">
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="Simone Fusco — Marketing, AI &amp; Data Analytics">
-  <meta property="og:description" content="Marketing, AI e data analytics. Founder di Lievitista, host di Fuori Tendenza. Trasformo i dati in strategie di marketing che funzionano.">
+  <meta property="og:description" content="Prevedo il comportamento, costruisco la strategia. Uso dati e intelligenza artificiale per orientare le decisioni di marketing.">
   <meta property="og:url" content="https://simonefusco2001.github.io/portfolio/">
   <meta property="og:image" content="https://simonefusco2001.github.io/portfolio/og-image.png">
   <meta property="og:image:width" content="1200">
@@ -29,7 +29,7 @@
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Simone Fusco — Marketing, AI &amp; Data Analytics">
-  <meta name="twitter:description" content="Marketing, AI e data analytics. Founder di Lievitista, host di Fuori Tendenza. Trasformo i dati in strategie di marketing che funzionano.">
+  <meta name="twitter:description" content="Prevedo il comportamento, costruisco la strategia. Uso dati e intelligenza artificiale per orientare le decisioni di marketing.">
   <meta name="twitter:image" content="https://simonefusco2001.github.io/portfolio/og-image.png">
 
   <!-- Favicon / icone -->
@@ -55,8 +55,8 @@
       --accent: #C98A2E;
       --accent-hover: #B87B22;
       --accent-foreground: #3A2A1C;
-      /* accent usato come TESTO — scurito per superare WCAG AA su --background e --surface */
-      --accent-text: #835514;
+      /* accent come TESTO in light — allineato all'ambra del logo (scelta di brand) */
+      --accent-text: #C98A2E;
       --grain-blend: multiply;
       --grain-opacity: 0.5;
       --radius: 0.9rem;
@@ -138,7 +138,7 @@
     .logo {
       position: relative;
       display: block;
-      height: clamp(2.5rem, 6vw, 3.5rem);
+      height: clamp(5.25rem, 11vw, 7.5rem);
       width: auto;
       margin-bottom: 1.75rem;
     }
@@ -178,17 +178,17 @@
       margin-inline: auto;
       color: var(--foreground);
       overflow-wrap: break-word;
-      hyphens: auto;
+      hyphens: manual;
+      text-wrap: balance;
     }
     h1 .hl { color: var(--accent-text); }
     p.sub {
       position: relative;
-      margin: 1.5rem auto 0;
-      max-width: 40rem;
+      margin: 1.75rem auto 0;
+      max-width: 34rem;
       color: var(--muted-foreground);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      font-size: clamp(0.7rem, 1.4vw, 0.85rem);
+      font-size: clamp(1rem, 2.1vw, 1.3rem);
+      line-height: 1.5;
     }
     .cta {
       position: relative;
@@ -267,6 +267,29 @@
     }
     .card .period { display: block; margin: 0.35rem 0 0.85rem; color: var(--muted-foreground); font-size: 0.9rem; }
     .card p { max-width: none; }
+    .card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 1.1rem;
+      color: var(--accent-text);
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      border-bottom: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+      padding-bottom: 2px;
+      transition: color 0.15s ease, border-color 0.15s ease;
+    }
+    .card-link svg { width: 14px; height: 14px; }
+    .card-link:hover { color: var(--accent-hover); border-bottom-color: var(--accent); }
+    .card-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+    .card-note {
+      display: block;
+      margin-top: 1.1rem;
+      color: var(--muted-foreground);
+      font-size: 0.825rem;
+      font-style: italic;
+    }
 
     /* ---- #strumenti ---- */
     .skill-group { margin-top: 2rem; }
@@ -579,12 +602,12 @@
 
   <section id="home" class="section">
     <picture>
-      <source srcset="logo-dark.png" media="(prefers-color-scheme: dark)">
-      <img class="logo" src="logo.png" alt="Simone Fusco" width="512" height="497">
+      <source srcset="logo-full-dark.png" media="(prefers-color-scheme: dark)">
+      <img class="logo" src="logo-full.png" alt="Fusco Simone" width="900" height="700">
     </picture>
     <span class="badge"><span class="dot"></span>Aperto a nuove opportunità</span>
-    <h1>Marketing e <span class="hl">intelligenza artificiale</span>, insieme per trasformare i <span class="hl">dati</span> in strategie che funzionano.</h1>
-    <p class="sub">Simone Fusco — Marketing, AI &amp; Data Analytics</p>
+    <h1>Prevedo il <span class="hl">comportamento</span>, costruisco la <span class="hl">strategia</span></h1>
+    <p class="sub">Uso dati e intelligenza artificiale per orientare le decisioni di marketing.</p>
     <a class="cta" href="Simone_Fusco_CV.pdf" download="Simone_Fusco_CV.pdf">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
       Scarica il CV (PDF)
@@ -637,7 +660,7 @@
         <p>Web app AI-first per gestire, mantenere e creare il lievito madre. Ho definito
           posizionamento, esperimenti data-driven e strategia di prodotto, validando l&rsquo;MVP
           con 60+ early adopter e 120+ lead.</p>
-        <!-- TODO: link a Lievitista quando disponibile -->
+        <span class="card-note">Progetto universitario &mdash; MVP non più online</span>
       </article>
       <article class="card">
         <h3>Fuori Tendenza</h3>
@@ -645,7 +668,10 @@
         <p>Podcast su come i social media influenzano identità, relazioni e scelte
           quotidiane. Ideazione, conduzione e distribuzione. 100+ ascolti su Spotify e
           migliaia di visualizzazioni sui social.</p>
-        <!-- TODO: link a Fuori Tendenza su Spotify quando disponibile -->
+        <a class="card-link" href="https://open.spotify.com/show/5EKIIN3hTyTscM2FK5prI6" target="_blank" rel="noopener">
+          Ascolta su Spotify
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>
+        </a>
       </article>
     </div>
   </section>

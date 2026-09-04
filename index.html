@@ -210,6 +210,7 @@
       text-decoration: none;
       font-size: 1.0625rem;
       font-weight: 700;
+      line-height: 1.3;
       box-shadow: 0 1px 2px rgba(58, 42, 28, 0.12), 0 10px 30px -8px color-mix(in srgb, var(--accent) 60%, transparent);
       transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
     }
@@ -476,7 +477,21 @@
       transition: opacity 0.18s ease;
     }
     .email-pill.is-copied .email-pill__done { opacity: 1; }
-    .site-footer .cta { margin-top: 0; }
+    /* il CTA nel footer scuro: stessa forma della pillola email, senza alone ambra */
+    .site-footer .cta {
+      margin-top: 0;
+      padding: 0.9rem 1.6rem;
+      border-radius: 999px;
+      border-color: transparent;
+      color: #241A12;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+    }
+    .site-footer .cta svg { opacity: 0.85; }
+    .site-footer .cta:hover,
+    .site-footer .cta:focus-visible {
+      background: var(--accent-hover);
+      box-shadow: 0 6px 16px -6px rgba(0, 0, 0, 0.55);
+    }
 
     @media (max-width: 860px) {
       .footer-top { grid-template-columns: 1fr; }
@@ -894,8 +909,6 @@
         <div class="footer-col">
           <span class="footer-col__title">Link</span>
           <a href="https://www.linkedin.com/in/simone-fusco-2633a7331/" target="_blank" rel="noopener">LinkedIn</a>
-          <a href="https://open.spotify.com/show/5EKIIN3hTyTscM2FK5prI6" target="_blank" rel="noopener">Fuori Tendenza</a>
-          <a href="https://www.instagram.com/fuori_tendenza/" target="_blank" rel="noopener">Instagram</a>
         </div>
       </div>
 

@@ -264,6 +264,11 @@
     }
     .about-photo__hint { display: none; }
     .about-dialog {
+      /* il reset globale (* { margin: 0 }) annulla il margin:auto con cui il browser
+         centra i dialog modali: qui lo rimettiamo */
+      position: fixed;
+      inset: 0;
+      margin: auto;
       width: min(30rem, calc(100vw - 2rem));
       max-height: min(80vh, 40rem);
       padding: clamp(1.5rem, 6vw, 2rem);

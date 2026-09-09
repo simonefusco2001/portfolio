@@ -1,6 +1,6 @@
 # Simone Fusco
 
-Anzio – Roma, Italia · simone.fusco2001@gmail.com · 380 248 8751 · [linkedin.com/in/simone-fusco-2633a7331](https://www.linkedin.com/in/simone-fusco-2633a7331/)
+Anzio – Roma, Italia · simone.fusco2001@gmail.com · 380 248 8751 · [LinkedIn](https://www.linkedin.com/in/simone-fusco-2633a7331/) · [Portfolio](https://simonefusco2001.github.io/portfolio/)
 
 ## Profilo
 
@@ -58,6 +58,7 @@ Laureando in Marketing & Digital Communication, con percorso formativo in AI, An
 
 - Marketing, Analisi e Ricerche di Mercato, Promozioni Aziendali e Revenue Management, Retail Marketing, Marketing Game, Autoimprenditorialità e Social Business
 - Internet Studies e Social Media Management, Storytelling e Linguaggi Multimediali, Corporate e Professional Communication, Filmmaking, Economia e Gestione delle Imprese, Diritto della Comunicazione
+- **Tesi:** "Analisi delle strategie di loyalty e del customer journey dei panifici moderni: studio e confronto tra il 'Pizzarium' di Bonci e 'Lievin' di Ian Spampatti"
 
 ### Start2Impact — Master in Digital Marketing
 *Online · 2021 – 2025*
